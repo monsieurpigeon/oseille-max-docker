@@ -3,13 +3,13 @@ import express, { Express, Request, Response } from "express";
 
 dotenv.config();
 
+const PORT = Number(process.env.PORT) || 8080;
+const HOST = "0.0.0.0";
 const app: Express = express();
-const port = process.env.PORT;
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("HELLO WORLD");
+  res.send("Hello World");
 });
-
-app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
+app.listen(PORT, HOST, () => {
+  console.log(`Running on http://${HOST}:${PORT}`);
 });
