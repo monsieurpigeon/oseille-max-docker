@@ -1,16 +1,28 @@
-FROM node:16
-
-WORKDIR /home/node/app
+# File ./Dockerfile
+FROM node:20.11.1-alpine AS base
 
 COPY package.json ./
+COPY yarn.lock ./
 
-RUN npm i
+RUN yarn install
 
-COPY . .
+# Copy source
+COPY src ./src
+COPY tsconfig.json ./tsconfig.json
 
-ENV NODE_PATH=./build
-ENV PORT=8080
-EXPOSE 8080
-RUN npm run build
+# Build dist
+RUN yarn build
 
-CMD [ "node", "build/index.js" ]
+# Start production image build
+FROM node:20.11.1-alpine
+
+# Copy node modules and build directory
+COPY --from=base ./node_modules ./node_modules
+COPY --from=base /dist /dist
+
+# Copy static files
+COPY src/assets dist/assets
+
+# Expose port 3000
+EXPOSE 4000
+CMD ["dist/server.js"]
