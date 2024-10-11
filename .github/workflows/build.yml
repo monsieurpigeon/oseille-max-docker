@@ -46,15 +46,11 @@ jobs:
         uses: actions/checkout@v3
       - name: Deploy client app to Scaleway
         id: deploy
-        uses: philibea/scaleway-containers-deploy@v1.1.5
+        uses: httptoolkit/deploy-scaleway-serverless-container-action@v1
         with:
-          scw_access_key: ${{ secrets.ACCESS_KEY }}
-          scw_secret_key: ${{ secrets.SECRET_KEY }}
-          scw_containers_namespace_id: ${{ secrets.CONTAINERS_NAMESPACE_ID }}
-          scw_container_port: 3000
-          scw_cpu_limit: 100
-          scw_memory_limit: 128
-          scw_registry: ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/client
+          container_id: fe605032-72a7-48df-94f3-e9b789fa8587
+          secret_key: ${{ secrets.SECRET_KEY }}
+          registry_image_url: ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/client:latest
   deploy-server:
     runs-on: ubuntu-latest
     needs: build-server
@@ -64,12 +60,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Deploy server app to Scaleway
         id: deploy_server
-        uses: philibea/scaleway-containers-deploy@v1.1.5
+        uses: httptoolkit/deploy-scaleway-serverless-container-action@v1
         with:
-          scw_access_key: ${{ secrets.ACCESS_KEY }}
-          scw_secret_key: ${{ secrets.SECRET_KEY }}
-          scw_containers_namespace_id: ${{ secrets.CONTAINERS_NAMESPACE_ID }}
-          scw_container_port: 4000
-          scw_cpu_limit: 100
-          scw_memory_limit: 128
-          scw_registry: ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/server
+          container_id: 760d0e0e-2430-45bc-9437-3a685118de14
+          secret_key: ${{ secrets.SECRET_KEY }}
+          registry_image_url: ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/server:latest
