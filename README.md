@@ -11,6 +11,7 @@ https://medium.com/@pierre.fourny/optimized-docker-setup-for-vite-powered-react-
 https://github.com/sidhantpanda/docker-express-typescript-boilerplate
 
 https://dev.to/ibrocodes/build-a-scalable-rest-api-with-typescript-express-drizzle-orm-and-turso-database-a-step-by-step-guide-2hnd
+https://www.scaleway.com/en/docs/tutorials/use-container-registry-github-actions/
 
 ### ALL
 
