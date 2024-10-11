@@ -1,35 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [message, setMessage] = useState<string>("");
+  useEffect(() => {
+    fetch("https://rocinanteqfp7qmyc-server.functions.fnc.fr-par.scw.cloud/")
+      .then((res) => res.json())
+      .then((data) => setMessage(data.message));
+  });
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="w-screen h-screen">
+      <main className="bg-primary w-full h-full box-border border-8 border-yellow-200 flex items-center justify-center">
+        <div className="flex flex-col">
+          <Badge>{message}</Badge>
+          <Button variant="secondary">Eat me</Button>
+        </div>
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
