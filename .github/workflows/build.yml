@@ -14,6 +14,10 @@ jobs:
           username: nologin
           password: ${{ secrets.SECRET_KEY }}
           registry: ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}
+      - name: "Create env file"
+        run: |
+          touch ./client/.env
+          echo "${{ secrets.ENV_FILE_CLIENT }}" > ./client/.env
       - name: Build the CLIENT Docker image
         run: docker build ./client -t ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/client
       - name: Push the CLIENT Docker Image
