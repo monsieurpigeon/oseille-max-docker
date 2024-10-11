@@ -25,4 +25,4 @@ COPY src/assets dist/assets
 
 # Expose port 3000
 EXPOSE 4000
-CMD ["dist/server.js"]
+CMD ["dist/index.js"]
