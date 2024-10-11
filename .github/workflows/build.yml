@@ -4,13 +4,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    name: Build & Push images to Scaleway Container Registry
     steps:
       - uses: actions/checkout@v4
       - name: Login to Scaleway Container Registry
         uses: docker/login-action@v3
         with:
           username: nologin
-          password: ${{ secrets.SCALEWAY_API_KEY }}
+          password: ${{ secrets.SECRET_KEY }}
           registry: ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}
       - name: Build the CLIENT Docker image
         run: docker build ./client -t ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/client
@@ -20,3 +21,32 @@ jobs:
         run: docker build ./server -t ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/server
       - name: Push the SERVER Docker Image
         run: docker push ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/server
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy on Scaleway Containers
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Deploy client app to Scaleway
+        id: deploy
+        uses: philibea/scaleway-containers-deploy@v1.0.5
+        with:
+          type: deploy_client
+          scw_access_key: ${{ secrets.ACCESS_KEY }}
+          scw_secret_key: ${{ secrets.SECRET_KEY }}
+          scw_containers_namespace_id: ${{ secrets.CONTAINERS_NAMESPACE_ID }}
+          scw_container_port: 3000
+          scw_cpu_limit: 10
+          scw_memory_limit: 128
+          scw_registry: ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/client:latest
+      - name: Deploy client app to Scaleway
+        id: deploy_server
+        uses: philibea/scaleway-containers-deploy@v1.0.5
+        with:
+          type: deploy
+          scw_access_key: ${{ secrets.ACCESS_KEY }}
+          scw_secret_key: ${{ secrets.SECRET_KEY }}
+          scw_containers_namespace_id: ${{ secrets.CONTAINERS_NAMESPACE_ID }}
+          scw_container_port: 4000
+          scw_memory_limit: 128
+          scw_registry: ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/server:latest
