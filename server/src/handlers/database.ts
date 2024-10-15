@@ -38,6 +38,7 @@ export async function createDatabase(req: Request, res: Response) {
     try {
       await turso.databases.create(databaseName, {
         schema: process.env.TURSO_SCHEMA_DATABASE_NAME!,
+        group: process.env.TURSO_GROUP_NAME!,
       });
     } catch (err) {
       console.error(err);
