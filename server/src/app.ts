@@ -22,7 +22,7 @@ class App {
 
   routes() {
     this.server.use("/api", productsRouter);
-    this.server.use("/api", databaseRouter);
+    this.server.use("/webhook", databaseRouter);
   }
 }
 
