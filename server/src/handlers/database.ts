@@ -31,6 +31,7 @@ export async function createDatabase(req: Request, res: Response) {
   } catch (err) {
     return new Response("Webhook verification failed", { status: 400 });
   }
+  console.log(evt);
 
   if (evt.type === "organization.created") {
     const databaseName = md5(evt.data.id);
