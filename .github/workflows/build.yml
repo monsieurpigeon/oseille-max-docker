@@ -33,10 +33,6 @@ jobs:
           username: nologin
           password: ${{ secrets.SECRET_KEY }}
           registry: ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}
-      - name: Build the CLIENT Docker image
-        run: docker build ./client -t ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/client
-      - name: Push the CLIENT Docker Image
-        run: docker push ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/client
       - name: Build the SERVER Docker image
         run: docker build ./server -t ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/server
       - name: Push the SERVER Docker Image
