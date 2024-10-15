@@ -1,4 +1,3 @@
-import { requireAuth } from "@clerk/express";
 import { Router } from "express";
 import {
   addProduct,
@@ -13,11 +12,6 @@ import {
 } from "../lib/validator-functions";
 
 const productsRouter = Router();
-
-// Use a custom sign-in URL instead of the environment variable
-productsRouter.get("/", requireAuth({ signInUrl: "/sign-in" }), (req, res) => {
-  res.send("This is a protected route");
-});
 
 productsRouter.get("/product/:id", validateIdParam(), getProduct);
 productsRouter.get("/product", getAllProducts);
