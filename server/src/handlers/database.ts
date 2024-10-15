@@ -18,7 +18,6 @@ export async function createDatabase(req: Request, res: Response) {
   const wh = new Webhook(WEBHOOK_SECRET!);
   const payload = req.body;
   const body = JSON.stringify(payload);
-  console.log(payload);
 
   let evt;
 
@@ -31,7 +30,7 @@ export async function createDatabase(req: Request, res: Response) {
   } catch (err) {
     return new Response("Webhook verification failed", { status: 400 });
   }
-  console.log(evt);
+  console.log("org", evt.type, evt.data.id);
 
   if (evt.type === "organization.created") {
     const databaseName = md5(evt.data.id);
@@ -41,6 +40,7 @@ export async function createDatabase(req: Request, res: Response) {
         schema: process.env.TURSO_SCHEMA_DATABASE_NAME!,
       });
     } catch (err) {
+      console.error(err);
       return new Response("Database creation failed", { status: 500 });
     }
   }
