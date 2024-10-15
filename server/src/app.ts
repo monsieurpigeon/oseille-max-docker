@@ -1,3 +1,4 @@
+import { clerkMiddleware } from "@clerk/express";
 import cors from "cors";
 import express from "express";
 import databaseRouter from "./routes/database";
@@ -14,6 +15,7 @@ class App {
   }
 
   middlewares() {
+    this.server.use(clerkMiddleware());
     this.server.use(express.json());
     this.server.use(cors());
   }

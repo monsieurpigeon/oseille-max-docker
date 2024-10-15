@@ -4,35 +4,40 @@ import {
   SignedIn,
   SignedOut,
   SignInButton,
+  useOrganization,
   UserButton,
 } from "@clerk/clerk-react";
-import { useEffect, useState } from "react";
+import { useProducts } from "./useProducts";
 
 function App() {
-  const [products, setProducts] = useState<{ name: string; id: string }[]>([]);
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/product`)
-      .then((res) => res.json())
-      .then((data) => setProducts(data.products));
-  });
+  const { organization } = useOrganization();
+
+  const { data } = useProducts();
+
+  const products = data?.products as { id: string; name: string }[];
 
   return (
     <div className="w-screen h-dvh">
-      <SignedOut>
-        <SignInButton />
-      </SignedOut>
-      <SignedIn>
-        <UserButton />
-        <OrganizationSwitcher />
-      </SignedIn>
-      <main className="bg-primary w-full h-full box-border border-8 border-yellow-200 flex items-center justify-center">
+      <main className="w-full h-full box-border border-8 border-yellow-200 flex flex-col">
+        <div id="header">
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+            <OrganizationSwitcher />
+          </SignedIn>
+        </div>
+
+        <div>{organization?.name}</div>
         <div className="flex flex-col">
           <ul>
-            {products.map((product) => (
-              <li key={product.id}>
-                <Badge>{product.name}</Badge>
-              </li>
-            ))}
+            {products &&
+              products.map((product) => (
+                <li key={product.id}>
+                  <Badge>{product.name}</Badge>
+                </li>
+              ))}
           </ul>
         </div>
       </main>

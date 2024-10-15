@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@clerk/backend@1.13.10":
+"@clerk/backend@1.13.10", "@clerk/backend@^1.13.10":
   version "1.13.10"
   resolved "https://registry.yarnpkg.com/@clerk/backend/-/backend-1.13.10.tgz#1409d88dfbbd16a4b59b6474e4b23da530f7afb3"
   integrity sha512-1pastJJ+LpEPxKynseJVsZhOwn4bO8Mg+ekCeoDbQC4b4jxSM4kOGriYAXy8xe4q2K+pufe/pTPeKxQT/jkxtg==
@@ -23,7 +23,17 @@
     "@clerk/types" "4.25.1"
     tslib "2.4.1"
 
-"@clerk/shared@2.9.1":
+"@clerk/express@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@clerk/express/-/express-1.2.3.tgz#4216199d6d24221e520b96b967962395e95a355c"
+  integrity sha512-jQAW0UMRfDbmplDdYqp5P06zWeyXt6CTnBWpsNNW+gCIIECu7DL/UB0OtR1BV1kRM0ssha9DOuf1N8zy0jkFfA==
+  dependencies:
+    "@clerk/backend" "^1.13.10"
+    "@clerk/shared" "^2.9.1"
+    "@clerk/types" "4.25.1"
+    tslib "2.4.1"
+
+"@clerk/shared@2.9.1", "@clerk/shared@^2.9.1":
   version "2.9.1"
   resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-2.9.1.tgz#60617bbcf0da66298fb8b18fcd30220fe5455c26"
   integrity sha512-NOO6gLRKvEMmz/3pjDiG/rE7ZSmLbZFaU1yTyx94Wb33v0sAaF4v8uypbXSswgAsPWVKu+fgkWmmbhBJP5Us7A==

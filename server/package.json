@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@clerk/clerk-sdk-node": "^5.0.50",
+    "@clerk/express": "^1.2.3",
     "@libsql/client": "^0.10.0",
     "@tursodatabase/api": "^1.8.1",
     "cors": "^2.8.5",

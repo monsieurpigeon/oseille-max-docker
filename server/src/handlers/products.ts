@@ -1,8 +1,10 @@
+import { getAuth } from "@clerk/express";
 import { eq } from "drizzle-orm";
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { db } from "../db/db";
 import { productTable } from "../db/schema";
+import { getDatabaseClient } from "../lib/common-db";
 import { CustomError } from "../lib/custom-error";
 
 export async function addProduct(
@@ -27,8 +29,10 @@ export async function getAllProducts(
   res: Response,
   next: NextFunction
 ) {
+  const auth = getAuth(req);
+  const client = await getDatabaseClient({ auth });
   try {
-    const products = await db.select().from(productTable);
+    const products = await client.select().from(productTable);
     res.status(200).json({ products });
   } catch (error) {
     next(new CustomError("Failed to fetch products", 500));
