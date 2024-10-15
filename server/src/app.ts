@@ -1,5 +1,6 @@
 import cors from "cors";
 import express from "express";
+import databaseRouter from "./routes/database";
 import productsRouter from "./routes/products";
 
 class App {
@@ -19,6 +20,7 @@ class App {
 
   routes() {
     this.server.use("/api", productsRouter);
+    this.server.use("/api", databaseRouter);
   }
 }
 
