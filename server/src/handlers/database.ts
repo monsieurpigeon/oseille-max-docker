@@ -18,6 +18,7 @@ export async function createDatabase(req: Request, res: Response) {
   const wh = new Webhook(WEBHOOK_SECRET!);
   const payload = req.body;
   const body = JSON.stringify(payload);
+  console.log(payload);
 
   let evt;
 
