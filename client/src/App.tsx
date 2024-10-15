@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import {
   OrganizationSwitcher,
   SignedIn,
@@ -30,12 +29,14 @@ function App() {
         </div>
 
         <div>{organization?.name}</div>
-        <div className="flex flex-col">
-          <ul>
+        <div className="flex flex-col bg-secondary grow p-4">
+          <ul className="flex gap-2 p-4 border rounded bg-card shadow-inner">
             {products &&
               products.map((product) => (
                 <li key={product.id}>
-                  <Badge>{product.name}</Badge>
+                  <div className="px-4 py-2 border rounded shadow">
+                    {product.name}
+                  </div>
                 </li>
               ))}
           </ul>
