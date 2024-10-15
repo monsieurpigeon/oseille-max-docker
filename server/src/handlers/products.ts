@@ -30,7 +30,6 @@ export async function getAllProducts(
   next: NextFunction
 ) {
   const auth = getAuth(req);
-  console.log("ORG ID", auth?.orgId);
   if (!auth || !auth.orgId) {
     return next(new CustomError("Unauthorized", 401));
   }
