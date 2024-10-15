@@ -30,6 +30,10 @@ export async function getAllProducts(
   next: NextFunction
 ) {
   const auth = getAuth(req);
+  console.log("ORG ID", auth?.orgId);
+  if (!auth || !auth.orgId) {
+    return next(new CustomError("Unauthorized", 401));
+  }
   const client = await getDatabaseClient({ auth });
   try {
     const products = await client.select().from(productTable);

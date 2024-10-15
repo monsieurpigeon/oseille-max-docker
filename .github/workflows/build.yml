@@ -48,6 +48,7 @@ jobs:
         id: deploy
         uses: httptoolkit/deploy-scaleway-serverless-container-action@v1
         with:
+          timeout_seconds: 300
           container_id: fe605032-72a7-48df-94f3-e9b789fa8587
           secret_key: ${{ secrets.SECRET_KEY }}
           registry_image_url: ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/client:latest
@@ -62,6 +63,7 @@ jobs:
         id: deploy_server
         uses: httptoolkit/deploy-scaleway-serverless-container-action@v1
         with:
+          timeout_seconds: 300
           container_id: 760d0e0e-2430-45bc-9437-3a685118de14
           secret_key: ${{ secrets.SECRET_KEY }}
           registry_image_url: ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/server:latest
