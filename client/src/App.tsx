@@ -1,49 +1,22 @@
-import {
-  OrganizationSwitcher,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  useOrganization,
-  UserButton,
-} from "@clerk/clerk-react";
-import { useProducts } from "./useProducts";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Layout from "./components/layout";
+import Products from "./pages/products";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "/products",
+        element: <Products />,
+      },
+    ],
+  },
+]);
 
 function App() {
-  const { organization } = useOrganization();
-
-  const { data } = useProducts();
-
-  const products = data?.products as { id: string; name: string }[];
-
-  return (
-    <div className="w-screen h-dvh">
-      <main className="w-full h-full box-border border-8 border-yellow-200 flex flex-col">
-        <div id="header">
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-            <OrganizationSwitcher />
-          </SignedIn>
-        </div>
-
-        <div>{organization?.name}</div>
-        <div className="flex flex-col bg-secondary grow p-4">
-          <ul className="flex gap-2 p-4 border rounded bg-card shadow-inner">
-            {products &&
-              products.map((product) => (
-                <li key={product.id}>
-                  <div className="px-4 py-2 border rounded shadow">
-                    {product.name}
-                  </div>
-                </li>
-              ))}
-          </ul>
-        </div>
-      </main>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
