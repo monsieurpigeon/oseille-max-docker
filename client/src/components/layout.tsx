@@ -4,9 +4,9 @@ import Navigation from "./navigation";
 
 export default function Layout() {
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-t from-primary/10 to-background">
+    <div className="h-screen flex flex-col">
       <Header />
-      <div className="flex p-4 gap-4 grow justify-stretch bg-background">
+      <div className="flex p-4 gap-4 grow justify-stretch bg-gradient-to-b from-secondary to-background">
         <div>
           <Navigation />
         </div>

@@ -48,11 +48,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return (
-    <div className="h-full flex flex-col  bg-gradient-to-t from-primary/20 to-background">
-      <RouterProvider router={router} />
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

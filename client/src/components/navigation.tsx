@@ -15,7 +15,7 @@ export default function Navigation() {
 
   return (
     <nav className="w-44 h-full">
-      <ul className="flex flex-col rounded border shadow-lg bg-card text-card-foreground">
+      <ul className="flex flex-col rounded border shadow-md bg-card text-card-foreground">
         {NAV_ITEMS.map((item, index) => {
           return (
             <Link key={index} to={item.href}>

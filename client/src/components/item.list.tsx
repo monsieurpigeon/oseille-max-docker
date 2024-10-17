@@ -22,7 +22,7 @@ export function ItemList({
     return null;
   }
   return (
-    <ul className="px-4 py-2 border rounded shadow-lg flex flex-col gap-2 grow bg-card text-card-foreground w-72">
+    <ul className="px-4 py-2 border rounded shadow-md flex flex-col gap-2 grow bg-card text-card-foreground w-72">
       <li className="text-center">
         <Link to={`${href}/create`} className="hover:underline">
           <div className="flex gap-2">

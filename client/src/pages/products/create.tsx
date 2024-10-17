@@ -58,7 +58,7 @@ export default function ProductForm() {
   }
 
   return (
-    <div className="p-4 border rounded shadow-lg grow bg-card text-card-foreground">
+    <div className="p-4 border rounded shadow-md grow bg-card text-card-foreground">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col justify-start items-start gap-4">
