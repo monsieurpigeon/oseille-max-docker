@@ -1,6 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/layout";
-import Products from "./pages/products";
+import CustomersPage from "./pages/customers";
+import DeliveriesPage from "./pages/deliveries";
+import InvoicesPage from "./pages/invoices";
+import OrdersPage from "./pages/orders";
+import PricesPage from "./pages/prices";
+import ProductsPage from "./pages/products";
 import ProductForm from "./pages/products/create";
 
 const router = createBrowserRouter([
@@ -10,7 +15,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/products",
-        element: <Products />,
+        element: <ProductsPage />,
         children: [
           {
             path: "create",
@@ -20,23 +25,23 @@ const router = createBrowserRouter([
       },
       {
         path: "/customers",
-        element: <Products />,
+        element: <CustomersPage />,
       },
       {
         path: "/prices",
-        element: <Products />,
+        element: <PricesPage />,
       },
       {
         path: "/orders",
-        element: <Products />,
+        element: <OrdersPage />,
       },
       {
         path: "/deliveries",
-        element: <Products />,
+        element: <DeliveriesPage />,
       },
       {
         path: "/invoices",
-        element: <Products />,
+        element: <InvoicesPage />,
       },
     ],
   },

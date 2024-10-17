@@ -3,7 +3,7 @@ import { useProducts } from "@/useProducts";
 import { Outlet, useLocation } from "react-router-dom";
 import Detail from "./detail";
 
-export default function Products() {
+export default function ProductsPage() {
   const location = useLocation();
   const id = location.search.split("id=")[1];
   const { data } = useProducts();
