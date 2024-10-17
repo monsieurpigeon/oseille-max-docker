@@ -16,8 +16,18 @@ export async function addProduct(
   if (!result.isEmpty()) {
     return next(new CustomError(JSON.stringify(result.array()), 400));
   }
+
+  const auth = getAuth(req);
+  if (!auth || !auth.orgId) {
+    return next(new CustomError("Unauthorized", 401));
+  }
+  const client = await getDatabaseClient({ auth });
+
   try {
-    const product = await db.insert(productTable).values(req.body).returning();
+    const product = await client
+      .insert(productTable)
+      .values(req.body)
+      .returning();
     res.status(201).json({ product });
   } catch (error) {
     next(new CustomError("Failed to add product", 500));
@@ -29,13 +39,17 @@ export async function getAllProducts(
   res: Response,
   next: NextFunction
 ) {
+  console.log("GET ALL PRODUCTS");
   const auth = getAuth(req);
   if (!auth || !auth.orgId) {
     return next(new CustomError("Unauthorized", 401));
   }
   const client = await getDatabaseClient({ auth });
   try {
-    const products = await client.select().from(productTable);
+    const products = await client
+      .select()
+      .from(productTable)
+      .orderBy(productTable.name);
     res.status(200).json({ products });
   } catch (error) {
     next(new CustomError("Failed to fetch products", 500));
@@ -47,12 +61,20 @@ export async function getProduct(
   res: Response,
   next: NextFunction
 ) {
+  console.log("GET PRODUCT");
   const result = validationResult(req);
   if (!result.isEmpty()) {
     return next(new CustomError(JSON.stringify(result.array()), 400));
   }
+
+  const auth = getAuth(req);
+  if (!auth || !auth.orgId) {
+    return next(new CustomError("Unauthorized", 401));
+  }
+  const client = await getDatabaseClient({ auth });
+
   try {
-    const product = await db
+    const product = await client
       .select()
       .from(productTable)
       .where(eq(productTable.id, Number(req.params.id)));
