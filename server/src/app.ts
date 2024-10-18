@@ -3,6 +3,9 @@ import cors from "cors";
 import express from "express";
 import customersRouter from "./routes/customers";
 import databaseRouter from "./routes/database";
+import deliveriesRouter from "./routes/deliveries";
+import invoicesRouter from "./routes/invoices";
+import ordersRouter from "./routes/orders";
 import pricesRouter from "./routes/prices";
 import productsRouter from "./routes/products";
 
@@ -26,6 +29,9 @@ class App {
     this.server.use("/api", productsRouter);
     this.server.use("/api", customersRouter);
     this.server.use("/api", pricesRouter);
+    this.server.use("/api", ordersRouter);
+    this.server.use("/api", deliveriesRouter);
+    this.server.use("/api", invoicesRouter);
     this.server.use("/webhook", databaseRouter);
   }
 }

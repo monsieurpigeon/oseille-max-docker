@@ -13,3 +13,17 @@ export interface Price {
   customerId: number;
   value: number;
 }
+
+export interface Order {
+  customerId: number;
+  notes: string;
+  deliveredAt: string;
+}
+
+export interface Delivery {
+  id: number;
+  name: string;
+  customerId: number;
+  notes: string;
+  deliveredAt: string;
+}

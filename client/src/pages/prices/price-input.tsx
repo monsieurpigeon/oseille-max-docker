@@ -33,7 +33,6 @@ export function PriceInput({
       productId: number;
       customerId: number;
     }) => {
-      console.log(newPrice);
       const res = await fetch(`${import.meta.env.VITE_API_URL}/price`, {
         headers: {
           Authorization: `Bearer ${await getToken()}`,

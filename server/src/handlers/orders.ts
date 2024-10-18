@@ -3,15 +3,11 @@ import { eq } from "drizzle-orm";
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { db } from "../db/db";
-import { priceTable } from "../db/schema";
+import { deliveryTable } from "../db/schema";
 import { getDatabaseClient } from "../lib/common-db";
 import { CustomError } from "../lib/custom-error";
 
-export async function addPrice(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export async function addOder(req: Request, res: Response, next: NextFunction) {
   const result = validationResult(req);
   if (!result.isEmpty()) {
     return next(new CustomError(JSON.stringify(result.array()), 400));
@@ -24,14 +20,17 @@ export async function addPrice(
   const client = await getDatabaseClient({ auth });
 
   try {
-    const price = await client.insert(priceTable).values(req.body).returning();
-    res.status(201).json({ price });
+    const order = await client
+      .insert(deliveryTable)
+      .values(req.body)
+      .returning();
+    res.status(201).json({ order });
   } catch (error) {
-    next(new CustomError("Failed to add price", 500));
+    next(new CustomError("Failed to add order", 500));
   }
 }
 
-export async function getAllPrices(
+export async function getAllOrders(
   req: Request,
   res: Response,
   next: NextFunction
@@ -42,41 +41,45 @@ export async function getAllPrices(
   }
   const client = await getDatabaseClient({ auth });
   try {
-    const prices = await client.select().from(priceTable);
-    res.status(200).json({ prices });
-  } catch (error) {
-    next(new CustomError("Failed to fetch prices", 500));
-  }
-}
-
-export async function getPrice(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  const result = validationResult(req);
-  if (!result.isEmpty()) {
-    return next(new CustomError(JSON.stringify(result.array()), 400));
-  }
-
-  const auth = getAuth(req);
-  if (!auth || !auth.orgId) {
-    return next(new CustomError("Unauthorized", 401));
-  }
-  const client = await getDatabaseClient({ auth });
-
-  try {
-    const price = await client
+    const orders = await client
       .select()
-      .from(priceTable)
-      .where(eq(priceTable.productId, Number(req.params.productId)));
-    res.status(200).json({ price });
+      .from(deliveryTable)
+      .where(eq(deliveryTable.isOrder, 1))
+      .orderBy(deliveryTable.id);
+    res.status(200).json({ orders });
   } catch (error) {
-    next(new CustomError("Failed to fetch price", 500));
+    next(new CustomError("Failed to fetch orders", 500));
   }
 }
 
-export async function deletePrice(
+export async function getOrder(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    return next(new CustomError(JSON.stringify(result.array()), 400));
+  }
+
+  const auth = getAuth(req);
+  if (!auth || !auth.orgId) {
+    return next(new CustomError("Unauthorized", 401));
+  }
+  const client = await getDatabaseClient({ auth });
+
+  try {
+    const order = await client
+      .select()
+      .from(deliveryTable)
+      .where(eq(deliveryTable.id, Number(req.params.id)));
+    res.status(200).json({ order });
+  } catch (error) {
+    next(new CustomError("Failed to fetch order", 500));
+  }
+}
+
+export async function deleteOrder(
   req: Request,
   res: Response,
   next: NextFunction
@@ -86,19 +89,19 @@ export async function deletePrice(
     return next(new CustomError(JSON.stringify(result.array()), 400));
   }
   try {
-    const price = await db
-      .delete(priceTable)
-      .where(eq(priceTable.productId, Number(req.params.productId)))
+    const order = await db
+      .delete(deliveryTable)
+      .where(eq(deliveryTable.id, Number(req.params.id)))
       .returning({
-        deletedPriceId: priceTable.productId,
+        deletedOrderId: deliveryTable.id,
       });
-    res.status(200).json({ price });
+    res.status(200).json({ order });
   } catch (error) {
-    next(new CustomError("Failed to delete price", 500));
+    next(new CustomError("Failed to delete order", 500));
   }
 }
 
-export async function updatePrice(
+export async function updateOrder(
   req: Request,
   res: Response,
   next: NextFunction
@@ -108,14 +111,14 @@ export async function updatePrice(
     return next(new CustomError(JSON.stringify(result.array()), 400));
   }
   try {
-    const price = await db
-      .update(priceTable)
+    const order = await db
+      .update(deliveryTable)
       .set(req.body)
-      .where(eq(priceTable.productId, Number(req.params.productId)))
+      .where(eq(deliveryTable.id, Number(req.params.id)))
       .returning();
 
-    res.status(201).json({ price });
+    res.status(201).json({ order });
   } catch (error) {
-    next(new CustomError("Failed to update price", 500));
+    next(new CustomError("Failed to update order", 500));
   }
 }

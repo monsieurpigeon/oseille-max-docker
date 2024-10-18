@@ -14,7 +14,6 @@ export default function PricesPage() {
   const { data: priceData } = usePrices();
   const prices = priceData?.prices || [];
 
-  console.log(prices);
   return (
     <div className="flex gap-4 h-full w-full items-stretch">
       <div className="flex flex-col w-full">

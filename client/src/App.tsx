@@ -3,6 +3,7 @@ import Layout from "./components/layout";
 import CustomersPage from "./pages/customers";
 import CustomerForm from "./pages/customers/create";
 import DeliveriesPage from "./pages/deliveries";
+import DeliveryForm from "./pages/deliveries/create";
 import InvoicesPage from "./pages/invoices";
 import OrdersPage from "./pages/orders";
 import PricesPage from "./pages/prices";
@@ -45,6 +46,12 @@ const router = createBrowserRouter([
       {
         path: "/deliveries",
         element: <DeliveriesPage />,
+        children: [
+          {
+            path: "create",
+            element: <DeliveryForm />,
+          },
+        ],
       },
       {
         path: "/invoices",
