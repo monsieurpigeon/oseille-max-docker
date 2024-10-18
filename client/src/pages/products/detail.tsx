@@ -1,4 +1,4 @@
-import { useProduct } from "@/useProducts";
+import { useProduct } from "@/lib/hooks/useProducts";
 
 export default function Detail() {
   const id = location.search.split("id=")[1];

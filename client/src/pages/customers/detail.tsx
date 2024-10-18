@@ -1,4 +1,4 @@
-import { useCustomer } from "@/useCustomers";
+import { useCustomer } from "@/lib/hooks/useCustomers";
 
 export default function Detail() {
   const id = location.search.split("id=")[1];

@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
-    <div className="shadow-md pb-1 bg-gradient-to-l from-sky-300  via-white via-85% to-90% to-yellow-300">
+    <div className="pb-1 bg-gradient-to-l from-sky-300  via-white via-85% to-90% to-yellow-300 border-b-2">
       <div className="bg-background flex justify-between items-center py-2 px-4">
         <Link to="/">
           <div className="text-2xl flex items-center gap-2">

@@ -1,5 +1,5 @@
-import { ItemList } from "@/components/item.list";
-import { useProducts } from "@/useProducts";
+import { ItemList } from "@/components/item-list";
+import { useProducts } from "@/lib/hooks/useProducts";
 import { Outlet, useLocation } from "react-router-dom";
 import Detail from "./detail";
 

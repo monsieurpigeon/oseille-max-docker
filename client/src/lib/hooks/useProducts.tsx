@@ -1,14 +1,15 @@
 import { useAuth, useOrganization } from "@clerk/clerk-react";
 import { useQuery } from "@tanstack/react-query";
+import { Product } from "../interfaces";
 
-export function useCustomers() {
+export function useProducts() {
   const { getToken } = useAuth();
   const { organization } = useOrganization();
 
   const query = useQuery({
-    queryKey: ["customers", organization?.id],
-    queryFn: async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/customer`, {
+    queryKey: ["products", organization?.id],
+    queryFn: async (): Promise<{ products: Product[] }> => {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/product`, {
         headers: { Authorization: `Bearer ${await getToken()}` },
       });
 
@@ -23,22 +24,19 @@ export function useCustomers() {
   return query;
 }
 
-export function useCustomer({ id }: { id: string }) {
+export function useProduct({ id }: { id: string }) {
   const { getToken } = useAuth();
   const { organization } = useOrganization();
 
   const query = useQuery({
-    queryKey: ["customer", id, organization?.id],
+    queryKey: ["product", id, organization?.id],
     queryFn: async () => {
       if (!id) {
         return;
       }
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/customer/${id}`,
-        {
-          headers: { Authorization: `Bearer ${await getToken()}` },
-        }
-      );
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/product/${id}`, {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
 
       if (!res.ok) {
         throw new Error("Erreur réseau");
