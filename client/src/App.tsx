@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/layout";
 import CustomersPage from "./pages/customers";
+import CustomerForm from "./pages/customers/create";
 import DeliveriesPage from "./pages/deliveries";
 import InvoicesPage from "./pages/invoices";
 import OrdersPage from "./pages/orders";
@@ -26,6 +27,12 @@ const router = createBrowserRouter([
       {
         path: "/customers",
         element: <CustomersPage />,
+        children: [
+          {
+            path: "create",
+            element: <CustomerForm />,
+          },
+        ],
       },
       {
         path: "/prices",

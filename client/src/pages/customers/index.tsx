@@ -1,3 +1,27 @@
+import { ItemList } from "@/components/item.list";
+import { useCustomers } from "@/useCustomers";
+import { Outlet, useLocation } from "react-router-dom";
+import Detail from "./detail";
+
 export default function CustomersPage() {
-  return <div>Clients</div>;
+  const location = useLocation();
+  const id = location.search.split("id=")[1];
+  const { data } = useCustomers();
+
+  const items = data?.customers as { id: number; name: string }[];
+
+  return (
+    <div className="flex gap-4 h-full w-full items-stretch">
+      <div className="flex flex-col">
+        <ItemList
+          items={items}
+          selected={id}
+          href="/customers"
+          label="client"
+        />
+      </div>
+      <Outlet />
+      {id && <Detail />}
+    </div>
+  );
 }

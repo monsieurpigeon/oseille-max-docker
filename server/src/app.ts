@@ -1,6 +1,7 @@
 import { clerkMiddleware } from "@clerk/express";
 import cors from "cors";
 import express from "express";
+import customersRouter from "./routes/customers";
 import databaseRouter from "./routes/database";
 import productsRouter from "./routes/products";
 
@@ -22,6 +23,7 @@ class App {
 
   routes() {
     this.server.use("/api", productsRouter);
+    this.server.use("/api", customersRouter);
     this.server.use("/webhook", databaseRouter);
   }
 }

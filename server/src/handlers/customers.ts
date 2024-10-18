@@ -3,11 +3,11 @@ import { eq } from "drizzle-orm";
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { db } from "../db/db";
-import { productTable } from "../db/schema";
+import { customerTable } from "../db/schema";
 import { getDatabaseClient } from "../lib/common-db";
 import { CustomError } from "../lib/custom-error";
 
-export async function addProduct(
+export async function addCustomer(
   req: Request,
   res: Response,
   next: NextFunction
@@ -24,17 +24,17 @@ export async function addProduct(
   const client = await getDatabaseClient({ auth });
 
   try {
-    const product = await client
-      .insert(productTable)
+    const customer = await client
+      .insert(customerTable)
       .values(req.body)
       .returning();
-    res.status(201).json({ product });
+    res.status(201).json({ customer });
   } catch (error) {
-    next(new CustomError("Failed to add product", 500));
+    next(new CustomError("Failed to add customer", 500));
   }
 }
 
-export async function getAllProducts(
+export async function getAllCustomers(
   req: Request,
   res: Response,
   next: NextFunction
@@ -45,17 +45,17 @@ export async function getAllProducts(
   }
   const client = await getDatabaseClient({ auth });
   try {
-    const products = await client
+    const customers = await client
       .select()
-      .from(productTable)
-      .orderBy(productTable.name);
-    res.status(200).json({ products });
+      .from(customerTable)
+      .orderBy(customerTable.name);
+    res.status(200).json({ customers });
   } catch (error) {
-    next(new CustomError("Failed to fetch products", 500));
+    next(new CustomError("Failed to fetch customers", 500));
   }
 }
 
-export async function getProduct(
+export async function getCustomer(
   req: Request,
   res: Response,
   next: NextFunction
@@ -72,17 +72,17 @@ export async function getProduct(
   const client = await getDatabaseClient({ auth });
 
   try {
-    const product = await client
+    const customer = await client
       .select()
-      .from(productTable)
-      .where(eq(productTable.id, Number(req.params.id)));
-    res.status(200).json({ product });
+      .from(customerTable)
+      .where(eq(customerTable.id, Number(req.params.id)));
+    res.status(200).json({ customer });
   } catch (error) {
-    next(new CustomError("Failed to fetch product", 500));
+    next(new CustomError("Failed to fetch customer", 500));
   }
 }
 
-export async function deleteProduct(
+export async function deleteCustomer(
   req: Request,
   res: Response,
   next: NextFunction
@@ -92,19 +92,19 @@ export async function deleteProduct(
     return next(new CustomError(JSON.stringify(result.array()), 400));
   }
   try {
-    const product = await db
-      .delete(productTable)
-      .where(eq(productTable.id, Number(req.params.id)))
+    const customer = await db
+      .delete(customerTable)
+      .where(eq(customerTable.id, Number(req.params.id)))
       .returning({
-        deletedProductId: productTable.id,
+        deletedCustomerId: customerTable.id,
       });
-    res.status(200).json({ product });
+    res.status(200).json({ customer });
   } catch (error) {
-    next(new CustomError("Failed to delete product", 500));
+    next(new CustomError("Failed to delete customer", 500));
   }
 }
 
-export async function updateProduct(
+export async function updateCustomer(
   req: Request,
   res: Response,
   next: NextFunction
@@ -114,14 +114,14 @@ export async function updateProduct(
     return next(new CustomError(JSON.stringify(result.array()), 400));
   }
   try {
-    const product = await db
-      .update(productTable)
+    const customer = await db
+      .update(customerTable)
       .set(req.body)
-      .where(eq(productTable.id, Number(req.params.id)))
+      .where(eq(customerTable.id, Number(req.params.id)))
       .returning();
 
-    res.status(201).json({ product });
+    res.status(201).json({ customer });
   } catch (error) {
-    next(new CustomError("Failed to update product", 500));
+    next(new CustomError("Failed to update customer", 500));
   }
 }
